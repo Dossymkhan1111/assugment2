@@ -1,4 +1,4 @@
-# Charts Toleubekov Temirlan and Ali Mamraev SE-2003
+# Charts 
 
 #Installation
 
