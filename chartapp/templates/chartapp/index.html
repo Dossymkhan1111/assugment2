@@ -1,0 +1,120 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+
+    <div class="row mt-5">
+        {% csrf_token %}
+        <div class="row col-md-4 p-3">
+            <button class="btn btn-warning m-4  w-75" id="piee">Pie Chart</button>
+            <button class="btn btn-warning m-4 w-75" id="barr">Bar Chart</button>
+            <button class="btn btn-warning m-4 w-75" id="linee">Line Chart</button>
+            <button class="btn btn-warning m-4 w-75"  id="polararea">Polar Area Chart</button>
+            <button class="btn btn-warning m-4 w-75" id="doughnut">Doughnut Chart</button>
+        </div>
+
+        <div class="col-md-8 p-6">
+            <canvas id="myChart" width="400" height="250"></canvas>
+            <script>
+
+                const linee = document.getElementById('linee');
+                const piee = document.getElementById('piee');
+                const barr = document.getElementById('barr');
+                const polararea = document.getElementById('polararea');
+                const doughnut = document.getElementById('doughnut');
+
+                linee.addEventListener('click', changeLine);
+                barr.addEventListener('click', changeBar);
+                piee.addEventListener('click', changePie);
+                polararea.addEventListener('click', changePolarArea);
+                doughnut.addEventListener('click', changeDoughnut);
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: [{% for account in accounts %}  '{{ account.accounts }}',  {% endfor %}],
+                        datasets: [{
+                            label: '# of Accounts',
+                            data: [{% for account in accounts %}  {{ account.balance }},  {% endfor %}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                                'rgba(255, 159, 64, 0.8)',
+                                'rgba(240, 120, 50, 0.8)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(240, 120, 50, 1)',
+
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                
+
+                
+
+                function changeLine(){
+                    const updateType = 'line';
+                    myChart.config.type = updateType;
+                    myChart.update();
+                    console.log('changeLine function');
+                }
+            
+                function changeBar(){
+                    const updateType = 'bar';
+                    myChart.config.type = updateType;
+                    myChart.update();
+                    console.log('changeBar function');
+                }
+
+                function changeDoughnut(){
+                    const updateType = 'doughnut';
+                    myChart.config.type = updateType;
+                    myChart.update();
+                    console.log('changeDoughnut function');
+                }
+
+                function changePie(){
+                    const updateType = 'pie';
+                    myChart.config.type = updateType;
+                    myChart.update();
+                    console.log('changePie function');
+                }
+
+                function changePolarArea(){
+                    const updateType = 'polarArea';
+                    myChart.config.type = updateType;
+                    myChart.update();
+                    console.log('changePolarArea function');
+                }
+
+
+            </script>
+        </div>
+
+        
+
+    </div>
+
+
+
+{% endblock %}
